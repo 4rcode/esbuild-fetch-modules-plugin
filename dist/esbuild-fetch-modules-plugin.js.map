@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../src/main/esbuild-fetch-modules-plugin.ts"],
+  "sourcesContent": ["import { Loader, Plugin } from \"../deps/esbuild.ts\";\n\nexport const NAMESPACE = \"fetch-modules\";\n\nexport const fetchModules: Plugin = {\n  name: NAMESPACE,\n  setup(build) {\n    build.onResolve({ filter: /^http.*(?:css|json|[jt]sx?)$/ }, ({ path }) => ({\n      path,\n      namespace: NAMESPACE,\n    }));\n\n    build.onResolve(\n      {\n        filter: /^[.]/,\n        namespace: NAMESPACE,\n      },\n      ({ path, importer }) => ({\n        path: new URL(path, importer).href,\n        namespace: NAMESPACE,\n      }),\n    );\n\n    build.onLoad(\n      {\n        filter: /./,\n        namespace: NAMESPACE,\n      },\n      async ({ path }) => ({\n        contents: await (await fetch(path)).text(),\n        loader: path.slice(path.lastIndexOf(\".\") + 1) as Loader,\n      }),\n    );\n  },\n};\n"],
+  "mappings": "AAEO,IAAMA,EAAY,gBAEZC,EAAuB,CAClC,KAAMD,EACN,MAAME,EAAO,CACXA,EAAM,UAAU,CAAE,OAAQ,8BAA+B,EAAG,CAAC,CAAE,KAAAC,CAAK,KAAO,CACzE,KAAAA,EACA,UAAWH,CACb,EAAE,EAEFE,EAAM,UACJ,CACE,OAAQ,OACR,UAAWF,CACb,EACA,CAAC,CAAE,KAAAG,EAAM,SAAAC,CAAS,KAAO,CACvB,KAAM,IAAI,IAAID,EAAMC,CAAQ,EAAE,KAC9B,UAAWJ,CACb,EACF,EAEAE,EAAM,OACJ,CACE,OAAQ,IACR,UAAWF,CACb,EACA,MAAO,CAAE,KAAAG,CAAK,KAAO,CACnB,SAAU,MAAO,MAAM,MAAMA,CAAI,GAAG,KAAK,EACzC,OAAQA,EAAK,MAAMA,EAAK,YAAY,GAAG,EAAI,CAAC,CAC9C,EACF,CACF,CACF",
+  "names": ["NAMESPACE", "fetchModules", "build", "path", "importer"]
+}

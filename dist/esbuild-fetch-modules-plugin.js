@@ -1,0 +1,2 @@
+var t="fetch-modules",o={name:t,setup(s){s.onResolve({filter:/^http.*(?:css|json|[jt]sx?)$/},({path:e})=>({path:e,namespace:t})),s.onResolve({filter:/^[.]/,namespace:t},({path:e,importer:a})=>({path:new URL(e,a).href,namespace:t})),s.onLoad({filter:/./,namespace:t},async({path:e})=>({contents:await(await fetch(e)).text(),loader:e.slice(e.lastIndexOf(".")+1)}))}};export{t as NAMESPACE,o as fetchModules};
+//# sourceMappingURL=esbuild-fetch-modules-plugin.js.map

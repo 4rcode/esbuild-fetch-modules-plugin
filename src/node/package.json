@@ -1,0 +1,6 @@
+{
+  "name": "esbuild-fetch-modules-plugin",
+  "version": "0.0.0",
+  "main": "esbuild-fetch-modules-plugin.js",
+  "types": "esbuild-fetch-modules-plugin.d.ts"
+}
