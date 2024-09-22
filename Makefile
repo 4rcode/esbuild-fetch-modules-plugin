@@ -15,10 +15,11 @@ build: compile
 
 .PHONY: clean
 clean:
-	rm -rf coverage dist src/test/dist tmp
+	rm -rf coverage src/test/dist
 
 .PHONY: compile
 compile: ${DENO}
+	rm -rf dist
 	${DENO} run -A src/cmd/build.ts
 	${DENO} run -A npm:typescript/tsc
 
